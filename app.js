@@ -38,7 +38,35 @@ app.get('/', function(req, res){
 app.get('/universities', function(req, res){
     res.render('universities');
 });
+// 3. Athletics Page
+app.get('/athletics', function(req, res){
+    res.render('athletics');
+});
 
+// 4. Majors Page
+app.get('/majors', function(req, res){
+    res.render('majors');
+});
+
+// 5. Costs Page
+app.get('/costs', function(req, res){
+    res.render('costs');
+});
+
+// 6. Tuition Page
+app.get('/tuition', function(req, res){
+    res.render('tuition');
+});
+
+// 7. University-Athletics Page (M:N)
+app.get('/universities_has_athletics', function(req, res){
+    res.render('universities_has_athletics');
+});
+
+// 8. University-Majors Page (M:N)
+app.get('/universities_has_majors', function(req, res){
+    res.render('universities_has_majors');
+});
 /*
     LISTENER
 */

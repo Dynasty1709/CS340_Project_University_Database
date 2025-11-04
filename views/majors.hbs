@@ -1,0 +1,49 @@
+<h2>Manage Majors (Master List)</h2>
+
+<fieldset>
+    <legend>Existing Majors</legend>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Level</th>
+                <th>Program</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Undergraduate</td>
+                <td>Computer Science</td>
+                <td><button>Edit</button> <button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Undergraduate</td>
+                <td>Business Administration</td>
+                <td><button>Edit</button> <button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Graduate</td>
+                <td>Public Health</td>
+                <td><button>Edit</button> <button>Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<br>
+
+<fieldset>
+    <legend>Add a New Major</legend>
+    <form>
+        <label>Level:</label>
+        <input type="text" name="level" placeholder="e.g. Undergraduate">
+        
+        <label>Program:</label>
+        <input type="text" name="program" placeholder="e.g. Computer Science">
+        
+        <input type="submit" value="Add Major">
+    </form>
+</fieldset>
