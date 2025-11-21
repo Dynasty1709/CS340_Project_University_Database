@@ -1,10 +1,14 @@
-/*
-    SETUP
-*/
+// ########################################
+// ########## SETUP
+
 const express = require('express');
 const app = express();
-const mysql = require('mysql2/promise');  
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+// const mysql = require('mysql2/promise');  
 
+// Database
 const db = require('./database/db-connector');
 
 // Handlebars
@@ -16,15 +20,16 @@ app.engine('hbs', handlebars.engine);
 app.set('view engine', 'hbs');
 
 // Port
-app.set('port', 14222);
+const PORT = 14222;
 
 // Static Files
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));  
 
-/*
-    ROUTES
-*/
+// ########################################
+// ########## ROUTE HANDLERS
+
+// ROUTES
 
 // Index page
 app.get('/', (req, res) => {
@@ -191,8 +196,9 @@ app.post('/reset', async (req, res) => {
   }
 });
 
-/*
-    Listener 
-*/
-app.listen(app.get('port'), () => {
-  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+// ########################################
+// ########## LISTENER
+
+app.listen(PORT, () => {
+  console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.');
+});
