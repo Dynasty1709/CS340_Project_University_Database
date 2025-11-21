@@ -11,16 +11,20 @@
             </tr>
         </thead>
         <tbody>
+            {{#each assignments}}
             <tr>
-                <td>Oregon State University</td>
-                <td>Computer Science</td>
-                <td><button>Delete</button></td>
+                <td>{{this.universityName}}</td>
+                <td>{{this.program}}</td>
+                <td>
+                    <!-- Remove assignment -->
+                    <form method="POST" action="/majors/remove" style="display:inline;">
+                        <input type="hidden" name="universityID" value="{{this.universityID}}">
+                        <input type="hidden" name="majorID" value="{{this.majorID}}">
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
             </tr>
-            <tr>
-                <td>Oregon State University</td>
-                <td>Business Administration</td>
-                <td><button>Delete</button></td>
-            </tr>
+            {{/each}}
         </tbody>
     </table>
 </fieldset>
@@ -28,19 +32,19 @@
 
 <fieldset>
     <legend>Assign a Major to a University</legend>
-    <form>
-        <label>University:</label>
-        <select name="universityID">
-            <option value="1">Oregon State University</option>
-            <option value="2">UCLA</option>
-            <option value="3">Washington University in St. Louis</option>
+    <form id="assign_major_form" method="POST" action="/majors/add">
+        <label for="universityID">University:</label>
+        <select id="universityID" name="universityID" required>
+            {{#each universities}}
+                <option value="{{this.universityID}}">{{this.universityName}}</option>
+            {{/each}}
         </select>
 
-        <label>Major:</label>
-        <select name="majorID">
-            <option value="1">Undergraduate - Computer Science</option>
-            <option value="2">Undergraduate - Business Administration</option>
-            <option value="3">Graduate - Public Health</option>
+        <label for="majorID">Major:</label>
+        <select id="majorID" name="majorID" required>
+            {{#each majors}}
+                <option value="{{this.majorID}}">{{this.level}} - {{this.program}}</option>
+            {{/each}}
         </select>
         
         <input type="submit" value="Assign Major">

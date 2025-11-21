@@ -179,6 +179,44 @@ app.post('/tuition/update', async (req, res) => {
   }
 });
 
+// add university (Insert)
+app.post('/universities/add', async (req, res) => {
+  const { universityName, location, campusType, acceptanceRate, athleticClassification } = req.body;
+  try {
+    await db.query('CALL add_university(?, ?, ?, ?, ?)', 
+      [universityName, location, campusType, acceptanceRate, athleticClassification]);
+    res.redirect('/universities');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Insert error');
+  }
+});
+
+// update university (Update)
+app.post('/universities/update', async (req, res) => {
+  const { universityID, universityName, location, campusType, acceptanceRate, athleticClassification } = req.body;
+  try {
+    await db.query('CALL update_university(?, ?, ?, ?, ?, ?)', 
+      [universityID, universityName, location, campusType, acceptanceRate, athleticClassification]);
+    res.redirect('/universities');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Update error');
+  }
+});
+
+// remove university (Delete)
+app.post('/universities/remove', async (req, res) => {
+  const { universityID } = req.body;
+  try {
+    await db.query('CALL remove_university(?)', [universityID]);
+    res.redirect('/universities');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Delete error');
+  }
+});
+
 // RESET the entire database  
 app.post('/reset', async (req, res) => {
   try {

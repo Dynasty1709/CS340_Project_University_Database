@@ -11,16 +11,20 @@
             </tr>
         </thead>
         <tbody>
+            {{#each assignments}}
             <tr>
-                <td>Oregon State University</td>
-                <td>Football (Men)</td>
-                <td><button>Delete</button></td>
+                <td>{{this.universityName}}</td>
+                <td>{{this.sportName}}</td>
+                <td>
+                    <!-- Remove assignment -->
+                    <form method="POST" action="/athletics/remove" style="display:inline;">
+                        <input type="hidden" name="universityID" value="{{this.universityID}}">
+                        <input type="hidden" name="sportID" value="{{this.sportID}}">
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
             </tr>
-            <tr>
-                <td>Oregon State University</td>
-                <td>Basketball (Men)</td>
-                <td><button>Delete</button></td>
-            </tr>
+            {{/each}}
         </tbody>
     </table>
 </fieldset>
@@ -28,19 +32,19 @@
 
 <fieldset>
     <legend>Assign a Sport to a University</legend>
-    <form>
-        <label>University:</label>
-        <select name="universityID">
-            <option value="1">Oregon State University</option>
-            <option value="2">UCLA</option>
-            <option value="3">Washington University in St. Louis</option>
+    <form id="assign_sport_form" method="POST" action="/athletics/add">
+        <label for="universityID">University:</label>
+        <select id="universityID" name="universityID" required>
+            {{#each universities}}
+                <option value="{{this.universityID}}">{{this.universityName}}</option>
+            {{/each}}
         </select>
 
-        <label>Sport:</label>
-        <select name="sportID">
-            <option value="1">Football (Men)</option>
-            <option value="2">Basketball (Men)</option>
-            <option value="3">Basketball (Women)</option>
+        <label for="sportID">Sport:</label>
+        <select id="sportID" name="sportID" required>
+            {{#each sports}}
+                <option value="{{this.sportID}}">{{this.sportName}}</option>
+            {{/each}}
         </select>
         
         <input type="submit" value="Assign Sport">

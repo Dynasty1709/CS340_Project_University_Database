@@ -15,15 +15,27 @@
             </tr>
         </thead>
         <tbody>
+            {{#each costs}}
             <tr>
-                <td>1</td>
-                <td>Oregon State University</td>
-                <td>2300.00</td>
-                <td>13200.00</td>
-                <td>6400.00</td>
-                <td>1200.00</td>
-                <td><button>Edit</button> <button>Delete</button></td>
+                <td>{{this.costID}}</td>
+                <td>{{this.universityName}}</td>
+                <td>{{this.fees}}</td>
+                <td>{{this.boarding}}</td>
+                <td>{{this.meals}}</td>
+                <td>{{this.books}}</td>
+                <td>
+                    <!-- Update form -->
+                    <form method="POST" action="/costs/update" style="display:inline;">
+                        <input type="hidden" name="universityID" value="{{this.universityID}}">
+                        <input type="number" step="0.01" name="fees" value="{{this.fees}}" required>
+                        <input type="number" step="0.01" name="boarding" value="{{this.boarding}}" required>
+                        <input type="number" step="0.01" name="meals" value="{{this.meals}}" required>
+                        <input type="number" step="0.01" name="books" value="{{this.books}}" required>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
             </tr>
+            {{/each}}
         </tbody>
     </table>
 </fieldset>
@@ -31,25 +43,26 @@
 
 <fieldset>
     <legend>Add a New Cost Record</legend>
-    <form>
+    <form id="add_cost_form" method="POST" action="/costs/add">
         <label>University:</label>
-        <select name="universityID">
+        <select name="universityID" required>
+            {{!-- Populate dynamically if you pass universities into the template --}}
             <option value="1">Oregon State University</option>
             <option value="2">University of California, Los Angeles</option>
             <option value="3">Washington University in St. Louis</option>
         </select>
 
         <label>Fees:</label>
-        <input type="number" step="0.01" name="fees" min="0">
+        <input type="number" step="0.01" name="fees" min="0" required>
 
         <label>Boarding:</label>
-        <input type="number" step="0.01" name="boarding" min="0">
+        <input type="number" step="0.01" name="boarding" min="0" required>
 
         <label>Meals:</label>
-        <input type="number" step="0.01" name="meals" min="0">
+        <input type="number" step="0.01" name="meals" min="0" required>
 
         <label>Books:</label>
-        <input type="number" step="0.01" name="books" min="0">
+        <input type="number" step="0.01" name="books" min="0" required>
         
         <input type="submit" value="Add Cost Record">
     </form>

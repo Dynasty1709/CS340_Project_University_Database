@@ -12,24 +12,21 @@
             </tr>
         </thead>
         <tbody>
+            {{#each athletics}}
             <tr>
-                <td>1</td>
-                <td>Football (Men)</td>
-                <td>Team</td>
-                <td><button>Edit</button> <button>Delete</button></td>
+                <td>{{this.sportID}}</td>
+                <td>{{this.sportName}}</td>
+                <td>{{this.sportType}}</td>
+                <td>
+                    <!-- Remove sport -->
+                    <form method="POST" action="/athletics/remove" style="display:inline;">
+                        <input type="hidden" name="universityID" value="{{../universityID}}">
+                        <input type="hidden" name="sportID" value="{{this.sportID}}">
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>Basketball (Men)</td>
-                <td>Team</td>
-                <td><button>Edit</button> <button>Delete</button></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Basketball (Women)</td>
-                <td>Team</td>
-                <td><button>Edit</button> <button>Delete</button></td>
-            </tr>
+            {{/each}}
         </tbody>
     </table>
 </fieldset>
@@ -37,14 +34,16 @@
 
 <fieldset>
     <legend>Add a New Sport</legend>
-    <form>
-        <label>Sport Name:</label>
-        <input type="text" name="sportName" placeholder="e.g. Basketball (Men)">
-        
-        <label>Sport Type:</label>
-        <select name="athleticClassification">
-            <option value="Individual">Individual</option>
-            <option value="Team">Team</option>
+    <form id="add_sport_form" method="POST" action="/athletics/add">
+        <input type="hidden" name="universityID" value="{{universityID}}">
+
+        <label for="sportID">Select Sport:</label>
+        <select id="sportID" name="sportID" required>
+            <option value="1">Football (Men)</option>
+            <option value="2">Basketball (Men)</option>
+            <option value="3">Basketball (Women)</option>
         </select>
+
+        <input type="submit" value="Add Sport">
     </form>
 </fieldset>
