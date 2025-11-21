@@ -217,6 +217,68 @@ app.post('/universities/remove', async (req, res) => {
   }
 });
 
+// Universities_has_Athletics page  
+app.get('/universities_has_athletics', async (req, res) => {
+  try {
+    const [assignments] = await db.query('CALL select_universities_has_athletics()');
+    const [universities] = await db.query('CALL select_universities()');
+    const [sports] = await db.query('CALL select_sports()');
+    res.render('universities_has_athletics', {
+      assignments: assignments[0],
+      universities: universities[0],
+      sports: sports[0]
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Database error');
+  }
+});
+
+// Universities_has_Majors page add/remove majors
+app.get('/universities_has_majors', async (req, res) => {
+  try {
+    // get all current assignments (junction table)
+    const [assignments] = await db.query('CALL select_universities_has_majors()');
+    // get universities for dropdown
+    const [universities] = await db.query('CALL select_universities()');
+    // get majors for dropdown
+    const [majors] = await db.query('CALL select_majors()');
+
+    res.render('universities_has_majors', {
+      assignments: assignments[0],
+      universities: universities[0],
+      majors: majors[0]
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Database error');
+  }
+});
+
+// add major
+app.post('/universities_has_majors/add', async (req, res) => {
+  const { universityID, majorID } = req.body;
+  try {
+    await db.query('CALL add_major_to_institution(?, ?)', [universityID, majorID]);
+    res.redirect('/universities_has_majors');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Insert error');
+  }
+});
+
+// delete major
+app.post('/universities_has_majors/remove', async (req, res) => {
+  const { universityID, majorID } = req.body;
+  try {
+    await db.query('CALL remove_major_from_institution(?, ?)', [universityID, majorID]);
+    res.redirect('/universities_has_majors');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Delete error');
+  }
+});
+
 // RESET the entire database  
 app.post('/reset', async (req, res) => {
   try {
