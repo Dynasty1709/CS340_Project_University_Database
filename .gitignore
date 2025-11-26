@@ -1,0 +1,16 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore environment files
+.env
+
+# Ignore logs
+*.log
+
+# Ignore OS/OneDrive junk
+AppData/
+*.tmp
+Thumbs.db
+desktop.ini
+~$*
+
