@@ -1,0 +1,16 @@
+<h2>Welcome to the University Database</h2>
+<p>
+    Please select a page from the navigation bar to manage the database.
+</p>
+
+<h2>Reset Database</h2>
+
+<fieldset>
+    <legend>Demonstrate RESET</legend>
+    <p>Delete any record from the database, then press RESET to restore schema and sample data.</p>
+
+    <form action="/reset" method="POST">
+        <input type="submit" value="RESET DATABASE"
+        onclick="return confirm('Are you sure you want to reset the database?')">
+    </form>
+</fieldset>

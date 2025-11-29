@@ -1,0 +1,69 @@
+<h2>Manage University Tuition</h2>
+
+<fieldset>
+    <legend>Existing Tuition Records</legend>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Tuition ID</th>
+                <th>For Cost Record (University)</th>
+                <th>In-State Tuition</th>
+                <th>Out-of-State Tuition</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each tuition}}
+            <tr>
+                <form method="POST" action="/tuition/update" style="display:contents;">
+                    <td>{{this.tuitionID}}</td>
+                    <td>
+                        {{this.costID}} ({{this.universityName}})
+                        
+                                                <input type="hidden" name="tuitionID" value="{{this.tuitionID}}">  <input type="hidden" name="universityID" value="{{this.universityID}}">
+                    </td>
+                    
+                    <td>
+                                                <input type="number" step="0.01" name="inStateTuition" value="{{this.currentInStateTuition}}" required>
+                    </td>
+                    
+                    <td>
+                                                <input type="number" step="0.01" name="outOfStateTuition" value="{{this.currentOutOfStateTuition}}" required>
+                    </td>
+                    
+                    <td style="white-space: nowrap;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to update this tuition record?')">Update</button>
+                    </form>
+                    
+                    <form method="POST" action="/tuition/remove" style="display:inline;">
+                                                <input type="hidden" name="tuitionID" value="{{this.tuitionID}}">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this tuition record?')">Delete</button>
+                    </form>
+                  </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend>Add a New Tuition Record</legend>
+        <form id="add_tuition_form" method="POST" action="/tuition/add">
+        <label for="costID">Cost Record:</label>
+        <select id="costID" name="costID" required>
+            {{#each costs}}
+                <option value="{{this.costID}}">Cost Record {{this.costID}} ({{this.universityName}})</option>
+            {{/each}}
+        </select>
+
+        <label for="inStateTuition">In-State Tuition:</label>
+        <input type="number" step="0.01" id="inStateTuition" name="inStateTuition" min="0" placeholder = "15246.00" required>
+
+        <label for="outOfStateTuition">Out-of-State Tuition:</label>
+        <input type="number" step="0.01" id="outOfStateTuition" name="outOfStateTuition" min="0" placeholder="33798.00" required>
+        
+        <input type="submit" value="Add Tuition Record">
+    </form>
+</fieldset>

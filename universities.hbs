@@ -1,0 +1,97 @@
+<h2>Manage Universities</h2>
+
+<fieldset>
+    <legend>Existing Universities</legend>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Campus Type</th>
+                <th>Acceptance Rate</th>
+                <th>Athletic Class</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each universities}}
+            <tr>
+                <form method="POST" action="/universities/update" style="display:contents;">
+    
+                <td>{{this.universityID}}</td>
+                
+                <input type="hidden" name="universityID" value="{{this.universityID}}"> 
+
+                                <td><input type="text" name="universityName" value="{{this.universityName}}"></td>
+                <td><input type="text" name="location" value="{{this.location}}"></td>
+                
+                <td>
+                    <select name="campusType">
+                        <option value="{{this.campusType}}" selected>{{this.campusType}}</option>
+                        <hr><option value="Urban">Urban</option>
+                        <option value="Suburban">Suburban</option>
+                        <option value="Rural">Rural</option>
+                    </select>
+                </td>
+                
+                <td><input type="number" step="0.01" min="0" max="100" name="acceptanceRate" value="{{this.acceptanceRate}}"></td>
+                
+                <td>
+                    <select name="athleticClassification">
+                        <option value="{{this.athleticClassification}}" selected>{{this.athleticClassification}}</option>
+                        <hr><option value="NCAA Division I">D1 - NCAA Division I</option>
+                        <option value="NCAA Division II">D2 - NCAA Division II</option>
+                        <option value="NCAA Division III">D3 - NCAA Division III</option>
+                        <option value="NAIA">NAIA - National Association of Intercollegiate Athletics</option>
+                    </select>
+                </td>
+                
+                <td style="white-space: nowrap;">
+                    <button type="submit" onclick="return confirm('Are you sure you want to update this university?')">Update</button>
+                </form>
+                
+                    <form method="POST" action="/universities/remove" style="display:inline;">
+                        <input type="hidden" name="universityID" value="{{this.universityID}}">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this university?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend>Add a New University</legend>
+    <form method="POST" action="/universities/add">
+        <label>Name:</label>
+        <input type="text" name="universityName" placeholder="e.g., Oregon State University"required>
+        
+        <label>Location (City, ST):</label>
+        <input type="text" name="location" placeholder="e.g., Corvallis, OR"required>
+        
+        <label>Campus Type:</label>
+        <select name="campusType" required>
+            <option>Urban</option>
+            <option>Suburban</option>
+            <option>Rural</option>
+        </select>
+
+        <label>Acceptance Rate:</label>
+        <input type="number" step="0.01" name="acceptanceRate" min="0" max="100" placeholder="79.0"required>
+
+        <label>Athletic Class:</label>
+        <select name="athleticClassification" required>
+            <option value="NCAA Division I">D1 - NCAA Division I</option>
+                        <option value="NCAA Division II">D2 - NCAA Division II</option>
+                        <option value="NCAA Division III">D3 - NCAA Division III</option>
+                        <option value="NAIA">NAIA - National Association of Intercollegiate Athletics</option>
+        </select>
+        
+                
+        <input type="submit" value="Add University">
+    </form>
+</fieldset>

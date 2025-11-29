@@ -1,0 +1,71 @@
+<h2>Assign Sports to Universities (M:N)</h2>
+
+<fieldset>
+    <legend>Existing Assignments</legend>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>University</th>
+                <th>Sport</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each assignments}}
+            <tr>
+                <form method="POST" action="/universities_has_athletics/update" style="display:contents;">
+                    
+                                        <td>
+                        {{this.universityName}}
+                        <input type="hidden" name="universityID" value="{{this.universityID}}">
+                    </td>
+
+                                        <td>
+                        <select name="sportID" required>
+                            <option value="{{this.sportID}}" selected>{{this.sportName}}</option>
+                            <hr>{{#each ../sports}}
+                                <option value="{{this.sportID}}">{{this.sportName}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+
+                    <td style="white-space: nowrap;">
+                        <input type="hidden" name="originalSportID" value="{{this.sportID}}">
+                        
+                        <button type="submit" onclick="return confirm('Are you sure you want to update this sport assignment?')">Update</button>
+                    </form>
+                    
+                                        <form method="POST" action="/universities_has_athletics/remove" style="display:inline;">
+                        <input type="hidden" name="universityID" value="{{this.universityID}}">
+                        <input type="hidden" name="sportID" value="{{this.sportID}}">
+                        <button type="submit" onclick="return confirm('Are you sure you want to remove this sport assignment?')">Delete</button>
+                    </form>
+                  </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend>Assign a Sport to a University</legend>
+    <form id="assign_sport_form" method="POST" action="/universities_has_athletics/add">
+        <label for="universityID">University:</label>
+        <select id="universityID" name="universityID" required>
+            {{#each universities}}
+                <option value="{{this.universityID}}">{{this.universityName}}</option>
+            {{/each}}
+        </select>
+
+        <label for="sportID">Sport:</label>
+        <select id="sportID" name="sportID" required>
+            {{#each sports}}
+                <option value="{{this.sportID}}">{{this.sportName}}</option>
+            {{/each}}
+        </select>
+        
+        <input type="submit" value="Assign Sport">
+    </form>
+</fieldset>
