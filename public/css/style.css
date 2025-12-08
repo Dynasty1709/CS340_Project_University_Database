@@ -1,0 +1,39 @@
+/* resize the logo */
+.logo {
+  width: 150px;   /* this can be adjusted */
+  height: auto;   /* keep aspect ratio */
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+/* styling for the header */
+header {
+  display: flex;
+  align-items: center;
+  background-color: #f9e79f; /* gold */
+  padding: 10px;
+}
+
+/* styling for the nav bar */
+nav {
+  background-color: #333;
+  padding: 10px;
+}
+
+/* styling for nav links */
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* page background */
+body {
+  background-color: #f9e79f; /* gold */
+  margin: 0;
+  font-family: sans-serif;
+}
