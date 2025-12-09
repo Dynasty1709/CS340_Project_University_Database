@@ -1,5 +1,7 @@
 -- Grader notes: we are leveraging displaying information about institutions
 -- to help ulfill the select requirements. 
+-- Google Gemini was utilized in testing and troubleshooting errors with the following prompt: "assist me in determining the errors in this code
+-- and assist me in correcting it. Give me thorough explanations of PL/SQL and stored procedures and why the corrections are necessary"
 
 -- Select universities  
  

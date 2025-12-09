@@ -52,11 +52,11 @@
     <form id="add_cost_form" method="POST" action="/costs/add">
         <label>University:</label>
         <select name="universityID" required>
-            {{#each universities}}
+            {{#each availableUniversities}}
                 <option value="{{this.universityID}}">{{this.universityName}}</option>
             {{/each}}
         </select>
-
+	<p>{{note}}</p>
         <label>Fees:</label>
         <input type="number" step="0.01" name="fees" min="0" placeholder="2300.00" required>
 

@@ -67,7 +67,8 @@ app.post('/reset', async function(req, res){
 app.get('/universities', async function(req, res){
   try {
     const [rows] = await db.query('CALL select_universities();');
-     res.render('universities', { universities: rows[0] });
+     await db.query('SELECT 1');
+	res.render('universities', { universities: rows[0] });
   } catch (err) {
     console.error(err);
     res.render('universities', { error: 'Database error' });
@@ -81,10 +82,10 @@ app.post('/universities/add', async function(req, res){
   } = req.body;
 
   try {
-    const [result] = await db.query('CALL add_university(?, ?, ?, ?, ?)', [
+    await db.query('CALL add_university(?, ?, ?, ?, ?)', [
       universityName, location, campusType, acceptanceRate, athleticClassification
     ]);
-    
+	await db.query('SELECT 1;');
     res.redirect('/universities');
   } catch (err) {
     console.error(err);
@@ -248,11 +249,18 @@ app.get('/costs', async function(req, res){
   try {
     const [rows] = await db.query('CALL select_cost_by_institution(?);', [null]);
     const [universities] = await db.query('CALL select_universities();'); // dropdown
-    const costData = (rows && rows[0]) ? rows[0] : [];
+    const [availableUniversities] = await db.query(
+        `SELECT U.universityID, U.universityName 
+         FROM UNIVERSITIES U 
+         LEFT JOIN COSTS C ON U.universityID = C.universityID
+         WHERE C.costID IS NULL;` 
+    );
+const costData = (rows && rows[0]) ? rows[0] : [];
     res.render('costs', {
       costs: costData,
       universities: universities[0],
-    });
+    availableUniversities: availableUniversities,
+	note: "Note: A new cost record can only be added if a cost record tied to a university does not already exist."});
   } catch (err) {
     console.error(err);
     res.render('costs', { error: 'Database error' });
@@ -301,16 +309,19 @@ app.get('/tuition', async function(req, res){
     const [rows] = await db.query('CALL select_cost_by_institution(?);',[null]);
 
     const [universities] = await db.query('CALL select_universities();');
-    const [allCosts] = await db.query(
+    const [availableCosts] = await db.query(
         `SELECT C.costID, U.universityName
          FROM COSTS C 
-         JOIN UNIVERSITIES U ON C.universityID = U.universityID;`
+         JOIN UNIVERSITIES U ON C.universityID = U.universityID
+	 LEFT JOIN TUITION T ON C.costID = T.costID
+	 WHERE T.costID IS NULL;`
     );
 
     res.render('tuition', {
       tuition: rows[0], 
       universities: universities[0], 
-      costs: allCosts
+      costs: availableCosts,
+note: "Note: A new tuition record can only be created if an existing tuition record tied to a cost record does not exist."
     });
   } catch (err) {
     console.error(err);
