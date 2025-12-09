@@ -1,3 +1,5 @@
+//Google Gemini was utilized to aid in correcting the app.js files with the following prompt, “explain to me app.js, what they are and what they do, and provide me with a template for each route.”
+
 // ########################################
 // ########## SETUP
 
@@ -494,3 +496,4 @@ app.listen(PORT, function () {
   // listRoutes(app); // <-- Now runs after everything is set up
 
 });
+
